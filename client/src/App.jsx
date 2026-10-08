@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-function App() {
+const API_URL = "https://final-practical-exam-gamma.vercel.app/students";
 
+function App() {
   const [students, setStudents] = useState([]);
 
   const [name, setName] = useState("");
@@ -12,25 +13,21 @@ function App() {
   const [editingId, setEditingId] = useState(null);
 
   const getStudents = () => {
-    axios
-      .get("https://final-practical-exam-gamma.vercel.app/students")
-      .then((response) => {
-        setStudents(response.data);
-      });
+    axios.get(API_URL).then((response) => {
+      setStudents(response.data);
+    });
   };
 
   useEffect(() => {
-
     getStudents();
-
   }, []);
 
   const addStudent = () => {
     axios
-      .post("https://final-practical-exam-gamma.vercel.app/students", {
+      .post(API_URL, {
         name: name,
         course: course,
-        age: age
+        age: age,
       })
       .then(() => {
         setName("");
@@ -41,11 +38,9 @@ function App() {
   };
 
   const deleteStudent = (id) => {
-    axios
-      .delete("https://final-practical-exam-gamma.vercel.app/students" + id)
-      .then(() => {
-        getStudents();
-      });
+    axios.delete(`${API_URL}/${id}`).then(() => {
+      getStudents();
+    });
   };
 
   const editStudent = (student) => {
@@ -57,10 +52,10 @@ function App() {
 
   const updateStudent = () => {
     axios
-      .put("https://final-practical-exam-gamma.vercel.app/students" + editingId, {
+      .put(`${API_URL}/${editingId}`, {
         name: name,
         course: course,
-        age: age
+        age: age,
       })
       .then(() => {
         setEditingId(null);
@@ -73,7 +68,6 @@ function App() {
 
   return (
     <div>
-
       <h1>Student Management System</h1>
 
       <h2>{editingId === null ? "Add Student" : "Edit Student"}</h2>
@@ -84,7 +78,8 @@ function App() {
         onChange={(event) => setName(event.target.value)}
       />
 
-      <br /><br />
+      <br />
+      <br />
 
       <input
         placeholder="Course"
@@ -92,15 +87,18 @@ function App() {
         onChange={(event) => setCourse(event.target.value)}
       />
 
-      <br /><br />
+      <br />
+      <br />
 
       <input
+        type="number"
         placeholder="Age"
         value={age}
         onChange={(event) => setAge(event.target.value)}
       />
 
-      <br /><br />
+      <br />
+      <br />
 
       {editingId === null ? (
         <button onClick={addStudent}>Add Student</button>
@@ -120,7 +118,6 @@ function App() {
           <button onClick={() => deleteStudent(student._id)}>Delete</button>
         </div>
       ))}
-
     </div>
   );
 }
