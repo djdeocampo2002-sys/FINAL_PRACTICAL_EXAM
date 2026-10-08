@@ -13,7 +13,7 @@ function App() {
 
   const getStudents = () => {
     axios
-      .get("https://vercel.com/djdeocampo2002-sys-projects/final-practical-exam-r6oo")
+      .get("https://final-practical-exam-gamma.vercel.app/students")
       .then((response) => {
         setStudents(response.data);
       });
@@ -27,7 +27,7 @@ function App() {
 
   const addStudent = () => {
     axios
-      .post("https://vercel.com/djdeocampo2002-sys-projects/final-practical-exam-r6oo", {
+      .post("https://final-practical-exam-gamma.vercel.app/students", {
         name: name,
         course: course,
         age: age
@@ -42,7 +42,7 @@ function App() {
 
   const deleteStudent = (id) => {
     axios
-      .delete("https://vercel.com/djdeocampo2002-sys-projects/final-practical-exam-r6oo/" + id)
+      .delete("https://final-practical-exam-gamma.vercel.app/students" + id)
       .then(() => {
         getStudents();
       });
@@ -57,7 +57,7 @@ function App() {
 
   const updateStudent = () => {
     axios
-      .put("https://vercel.com/djdeocampo2002-sys-projects/final-practical-exam-r6oo/" + editingId, {
+      .put("https://final-practical-exam-gamma.vercel.app/students" + editingId, {
         name: name,
         course: course,
         age: age
